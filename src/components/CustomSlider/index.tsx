@@ -1,28 +1,42 @@
-import {
-  Carousel,
-  CarouselItem,
-  CarouselItems,
-  useCarousel
-} from "chakra-framer-carousel";
+import { useRef } from 'react';
 
-import { RiArrowLeftLine, RiArrowRightLine } from 'react-icons/ri';
+import {
+  StackedCarousel,
+  ResponsiveContainer,
+} from "react-stacked-center-carousel";
+
 import { Flex } from '@chakra-ui/react';
-import { SubscriptionCard } from '../SubscriptionCard';
+import { SubscriptionCardMemo } from '../SubscriptionCard';
 import { plansData } from '../../utils/data';
+import { Arrow } from "../Arrow";
 
 export function CustomSlider() {
-  const { onNext, onPrevious } = useCarousel();
+  const ref = useRef<any>();
+
   return (
-    <Flex w='100%' maxW='1220px' mb='100px' alignItems='center'>
-      <Carousel>
-        <CarouselItems>
-          {plansData.map((plan, index) => (
-            <CarouselItem key={plan.id} index={index}>
-              <SubscriptionCard plan={plan} />
-            </CarouselItem>
-          ))}
-        </CarouselItems>
-      </Carousel>
+    <Flex w='100%' maxW='1220px' mb='100px' alignItems='center' position='relative'>
+      
+      <Arrow isLeft onClick={() => ref.current?.goBack()} />
+      <ResponsiveContainer
+        carouselRef={ref}
+        render={(parentWidth, carouselRef) => {
+          let currentVisibleSlide = 3
+          if (parentWidth <= 960) currentVisibleSlide = 1;
+          return (
+            <StackedCarousel
+              ref={carouselRef}
+              slideComponent={SubscriptionCardMemo}
+              slideWidth={400}
+              carouselWidth={parentWidth}
+              data={plansData}
+              currentVisibleSlide={currentVisibleSlide}
+              maxVisibleSlide={3}
+              useGrabCursor
+            />
+          );
+        }}
+      />
+      <Arrow isLeft={false} onClick={() => ref.current?.goNext()} />
     </Flex>
   );
 }

@@ -1,14 +1,12 @@
+import { memo } from 'react';
+
 import { Box, Text, Flex } from '@chakra-ui/react';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 
-import {
-  useCarouselItem
-} from "chakra-framer-carousel";
 import { CustomButton } from '../CustomButton';
 
-
 interface SubscriptionCardProps {
-  plan: {
+  data: {
     id: number;
     type: string;
     price: string;
@@ -17,16 +15,19 @@ interface SubscriptionCardProps {
     dashboard: boolean;
     exclusiveSupport: boolean;
     corporateEmail: boolean;
-  }
+  }[];
+  dataIndex: number;
+  isCenterSlide: boolean;
 }
 
-export function SubscriptionCard({ plan }: SubscriptionCardProps) {
-  const { onClickHandler, position } = useCarouselItem();
-  const isCenter = position === 'center';
+function SubscriptionCard({ data, dataIndex, isCenterSlide }: SubscriptionCardProps) {
+  const isCenter = isCenterSlide;
+  const plan = data[dataIndex];
 
   return (
     <Box
-      w='333px'
+      w='100%'
+      maxW='333px'
       py='40px'
       px='38px'
       mx='30px'
@@ -37,7 +38,6 @@ export function SubscriptionCard({ plan }: SubscriptionCardProps) {
       borderColor='purple.500'
       borderRadius='10px'
       style={isCenter ? { opacity: '1' } : { opacity: '0.5' }}
-      onClick={onClickHandler}
     >
       <Box
         w='100%'
@@ -129,3 +129,5 @@ export function SubscriptionCard({ plan }: SubscriptionCardProps) {
     </Box>
   );
 }
+
+export const SubscriptionCardMemo = memo(SubscriptionCard);

@@ -1,10 +1,15 @@
 import Head from 'next/head';
+
 import { Flex, Box, Text, Image } from '@chakra-ui/react';
 
 import { Header } from '../components/Header';
+
 import { CustomButton } from '../components/CustomButton';
-import { Sponsors } from '../components/Sponsors';
+import { CustomHeading } from '../components/CustomHeading';
 import { CustomSlider } from '../components/CustomSlider';
+
+import { Sponsors } from '../components/Sponsors';
+import { Footer } from '../components/Footer';
 
 export default function Home() {
   return (
@@ -28,14 +33,18 @@ export default function Home() {
           w='100%'
           px='16px'
           maxW='1220px'
-          justify='space-between'
+          justify={{base: 'center', lg: 'space-between'}}
           alignItems='center'
           mx='auto'
           id='inicio'
         >
-          <Box>
+          <Flex 
+            direction='column' 
+            alignItems={{base: 'center', lg: 'initial'}}
+            textAlign={{ base: 'center', lg: 'initial' }}
+          >
             <Text 
-              fontSize='2xl'
+              fontSize={{base: 'lg', md: '2xl'}}
               fontWeight='light'
               letterSpacing='3.85px'
               mb='3'
@@ -43,14 +52,12 @@ export default function Home() {
               ESQUECE O PONTO MANUAL
             </Text>
 
-            <Text
-              fontSize='40px'
-              fontWeight='bold'
+            <CustomHeading
               mb='5'
             >
               Chegou a nova realidade para
               <Text as='span' color='purple.500'> Controle de Pontos</Text>
-            </Text>
+            </CustomHeading>
 
             <Text
               fontSize='lg' 
@@ -64,6 +71,9 @@ export default function Home() {
 
             <Flex
               gap='15px'
+              flexWrap='wrap'
+              w='100%'
+              justify={{base: 'center', lg: 'initial'}}
             >
               <CustomButton
                 bg='purple.500'
@@ -85,11 +95,12 @@ export default function Home() {
                 Ver Planos
               </CustomButton>
             </Flex>
-          </Box>
+          </Flex>
 
           <Image 
-            alt='Homem usando VR flutua com objetos no espaço' 
+            alt='' //Descrição pode ser confusa para o usuário com leitor de tela
             src='/assets/landingImage.svg'
+            display={{ base: 'none', lg: 'inline-block' }}
           />
         </Flex>
 
@@ -106,13 +117,11 @@ export default function Home() {
             w='100%'
             textAlign='center'
           >
-            <Text 
-              fontSize='40px'
-              fontWeight='bold'
+            <CustomHeading 
               mb='10px'
             >
               Encontre o plano perfeito
-            </Text>
+            </CustomHeading>
 
             <Text 
               fontSize='20px'
@@ -127,6 +136,8 @@ export default function Home() {
 
           <CustomSlider />
         </Flex>
+
+        <Footer />
       </Flex>
     </>
   );

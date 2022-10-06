@@ -9,15 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.0",
     "@chakra-ui/react": "^2.3.4",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
-    "chakra-framer-carousel": "^0.5.0",
     "framer-motion": "^6.5.1",
+    "graphql": "^16.6.0",
+    "moment": "^2.29.4",
     "next": "12.3.1",
+    "nookies": "^2.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.4.0"
+    "react-icons": "^4.4.0",
+    "react-stacked-center-carousel": "^1.0.12"
   },
   "devDependencies": {
     "@types/node": "18.7.23",

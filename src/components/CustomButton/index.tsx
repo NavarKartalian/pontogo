@@ -14,6 +14,7 @@ export function CustomButton({ children, href, ...rest }: CustomButtonProps) {
       borderRadius='5px'
       fontWeight='normal'
       href={href}
+      colorScheme='none'
       {...rest}
     >
       {children}

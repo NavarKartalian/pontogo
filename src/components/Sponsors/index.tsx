@@ -8,14 +8,15 @@ export function Sponsors() {
       w='100%'
       px='16px'
       mx='auto'
+      flexWrap='wrap'
       justify='space-around'
       mt='30px'
       mb='80px'
     >
-      <Image alt='brainny logo' src='/assets/brainny.svg' /> 
-      <Image alt='brainny logo' src='/assets/amoPet.svg' />
-      <Image alt='brainny logo' src='/assets/dotBus.svg' />
-      <Image alt='brainny logo' src='/assets/goStudy.svg' />       
+      <Image alt='brainny logo' src='/assets/logos/brainny.svg' /> 
+      <Image alt='brainny logo' src='/assets/logos/amoPet.svg' />
+      <Image alt='brainny logo' src='/assets/logos/dotBus.svg' />
+      <Image alt='brainny logo' src='/assets/logos/goStudy.svg' />       
     </Flex>
   );
 }
