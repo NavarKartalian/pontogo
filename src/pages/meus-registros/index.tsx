@@ -21,6 +21,7 @@ import { CustomButton } from "../../components/CustomButton";
 import { CustomModal } from "../../components/CustomModal";
 import { Pagination } from "../../components/Pagination";
 import { CustomDrawer } from "../../components/CustomDrawer";
+import { useCreateRegisteredTimeMutation, useGetMyRegisteredTimesQuery } from "../../graphql/generated";
 
 interface ResgisteredTimes {
   id: string;
@@ -38,9 +39,11 @@ interface MyRegistersProps {
 
 export default function MyRegisters({ registeredTimes, myId }: MyRegistersProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  
+  const { 'nextAuth.token': token } = parseCookies(); 
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [ times, setTimes ] = useState<ResgisteredTimes[]>(registeredTimes);
+  const [ times, setTimes ] = useState(registeredTimes);
 
   const indexOfLastTime = currentPage * 9;
   const indexOfFirstTime = indexOfLastTime - 9;
@@ -49,20 +52,13 @@ export default function MyRegisters({ registeredTimes, myId }: MyRegistersProps)
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
+  const [ registeTime ] = useCreateRegisteredTimeMutation();
+
   async function handleCreateNewRegisteredTime() {
     try {
       const { 'nextAuth.token': token } = parseCookies(); 
 
-      await client.mutate({
-        mutation: gql`
-          mutation createRegisteredTime($id: ID!) {
-            createRegisteredTime(input: {data: {user: $id}}) {
-              registeredTime: registeredTime {
-                id
-              }
-            }
-          }
-        `,
+      await registeTime({
         context: {
           headers: {
             "Authorization": `Bearer ${token}`
@@ -71,31 +67,31 @@ export default function MyRegisters({ registeredTimes, myId }: MyRegistersProps)
         variables: {
           id: myId
         }
-    });
+      });
 
-    const { data } = await client.query({
-      query: gql`
-        query GetMyRegisteredTimes($id: String!) {
-          registeredTimes(where: { user: { id: $id } }) {
-            user: user {
-              name,
+      const { data } = await client.query({
+        query: gql`
+          query GetMyRegisteredTimes($id: String!) {
+            registeredTimes(where: { user: { id: $id } }) {
+              user: user {
+                name,
+                id
+              }
+              created_at,
               id
+              
             }
-            created_at,
-            id
-            
           }
-        }
-      `,
-      context: {
-        headers: {
-          "Authorization": `Bearer ${token}`
+        `,
+        context: {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          },
         },
-      },
-      variables: {
-        id: myId
-      }
-    });
+        variables: {
+          id: myId
+        }
+      });
 
     const registeredTimes = data.registeredTimes;
 

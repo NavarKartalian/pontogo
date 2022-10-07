@@ -10,7 +10,7 @@ export default function Document() {
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet" />
         <link rel="icon" type='image/svg+xml' href="/icon.svg" />
       </Head>
-      <body className='w-full bg-[#121214] bg-backImage bg-cover bg-no-repeat'>
+      <body>
         <Main />
         <NextScript />
       </body>

@@ -9,6 +9,7 @@ import { setCookie } from "nookies";
 
 import { CustomButton } from "../CustomButton";
 import { LoginInput } from "./LoginInput";
+import { useLoginMutation } from "../../graphql/generated";
 
 
 export function LoginForm() {
@@ -18,35 +19,19 @@ export function LoginForm() {
 
   const route = useRouter();
 
-  const LOGIN = gql`
-    mutation Login($password: String!, $identifier: String!) {
-      login(input: {password: $password, identifier: $identifier}) {
-        jwt,
-        user: user {
-          id,
-          username,
-          email,
-          role: role {
-            id,
-            name
-          }
-        }
-      }
-    }
-  `;
+  const [ login ] = useLoginMutation();
 
   async function handleLogin(e: FormEvent) {
     e.preventDefault();
 
     let token = '';
 
-    await client.mutate({
-      mutation: LOGIN,
-      variables: { password: password, identifier: email }
-    }).then(({ data }) => token = data.login.jwt)
+    await login({
+      variables: { password: password, identifier: email },
+    }).then(({ data }) => token = data?.login.jwt!)
     .catch(() => setIsInvalid(true));
 
-    setCookie(null, 'nextAuth.token', token, {
+    setCookie(null, 'nextAuth.token', token!, {
       maxAge: 60 * 60 * 24,
       path: '/',
     });
