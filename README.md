@@ -7,6 +7,7 @@
 ## Iniciando
 
 Primeiramente instale as dependências e inicie o servidor de desenvolvimento:
+
 *Pela aplicação usar Next talvez seja preciso instalar o [Node](https://nodejs.org/en/) em sua maquina
 
 ```bash
