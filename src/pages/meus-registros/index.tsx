@@ -21,7 +21,7 @@ import { CustomButton } from "../../components/CustomButton";
 import { CustomModal } from "../../components/CustomModal";
 import { Pagination } from "../../components/Pagination";
 import { CustomDrawer } from "../../components/CustomDrawer";
-import { useCreateRegisteredTimeMutation, useGetMyRegisteredTimesQuery } from "../../graphql/generated";
+import { useCreateRegisteredTimeMutation } from "../../graphql/generated";
 
 interface ResgisteredTimes {
   id: string;
